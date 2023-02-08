@@ -1,0 +1,1 @@
+export type CompareFunction = (o1: any, o2: any) => number;

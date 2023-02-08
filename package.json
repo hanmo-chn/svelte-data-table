@@ -1,0 +1,13 @@
+{
+  "name": "@hanmotec/advance-datatable",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "publish:public": "cp ./package.json ./dist/ && cp ./src/adv-table.css ./dist/ && cp ./LICENSE ./dist/ && cp ./*.md ./dist/ &&  cd ./dist && npm publish --access public"
+  },
+  "dependencies": {
+  }
+}
