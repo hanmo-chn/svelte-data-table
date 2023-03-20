@@ -1,1 +1,0 @@
-export type MatchFunction = (o1:any, o2:any) => boolean;
