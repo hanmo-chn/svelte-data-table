@@ -17,10 +17,13 @@
     export let list;
     export let options: any = null;
     export let selectedRows: Array<any> = [];
+    export let style: string = '';
+
+    let className: string = '';
+    export  {className as class};
 
     let rowHeight: number = 0;
     let headerHeight: number = 0;
-    let actionBuilder: any = options.actionBuilder;
     let tabCols:Array<TableColumn> = [];
     let tableWidth: number = 0;
 
@@ -122,7 +125,7 @@
     }
 
 </script>
-<div bind:this={tabElement} class="tsui-adv-table-panel" {id} style={grid$style}>
+<div bind:this={tabElement} class="tsui-adv-table-panel {className}" {id} style="{style}; {grid$style}">
     {@html tableStyles}
     <div class="table-header indicator-col" style="line-height: {headerHeight}px">
         <span>序号</span>
