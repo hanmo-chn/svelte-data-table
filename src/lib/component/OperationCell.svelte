@@ -40,7 +40,7 @@
 </script>
 <div bind:this={cell} class="operation-cell" style="height: {rowHeight}px; padding 4px 0">
     {#each buttons as action}
-        <a class="action-button" style="line-height:{rowHeight-8}px" href="javascript:void(0)" on:click={(e)=>{action.callback(item); console.log(e.target.getBoundingClientRect())}}>{action.label}</a>
+        <a class="action-button" style="line-height:{rowHeight-8}px" href="javascript:void(0)" on:click={(e)=>{action.callback(item)}}>{action.label}</a>
     {/each}
     {#if popupList.length > 0}
         <a class="action-button" style="line-height:{rowHeight-8}px; min-width: 20px" href="javascript:void(0)" on:click={showPopupActions}>...</a>

@@ -150,7 +150,7 @@
         </div>
         {#if hasOperation}
             <div  transition:fade class="table-content-panel operation-col" on:scroll={handleOperationColScroll}>
-                <OperationRows list={sortedList} {tableRect} vacancy={actionColumn.vacancy}
+                <OperationRows list={sortedList} {tableRect} vacancy={actionColumn.numOfVacancy || 2}
                                actionBuilder={actionColumn.actionBuilder} {rowHeight}
                                hasHorizontalScroll={tableWidth > viewWidth}/>
             </div>

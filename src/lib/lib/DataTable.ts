@@ -48,7 +48,6 @@ export default class DataTable {
                 this.#columns.push(tabCol);
             }
         });
-        console.log('初始化的字段', this.#columns)
         this.adjustColumnsWidth();
         this.#onChange = onChange;
     }
