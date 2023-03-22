@@ -8,7 +8,7 @@
     export let tableRect: any;
 
 </script>
-<div style="position: relative;">
+<div style="position: relative; width: 100%; box-sizing: border-box;">
     {#each list as item, idx}
         <OperationCell {vacancy} {tableRect} {rowHeight} actions={actionBuilder(item)} {item}/>
     {/each}

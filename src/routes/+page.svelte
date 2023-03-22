@@ -135,7 +135,7 @@
         actionColumn: {
             text: '操作',
             vacancy: 2,
-            width: 150,
+            width: 130,
             actionBuilder: item => [
                 {
                     label: '编辑',

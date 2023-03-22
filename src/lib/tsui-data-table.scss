@@ -131,6 +131,8 @@
       box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
       text-align: center;
       overflow-y: auto;
+      overflow-x: hidden;
+      user-select: none;
 
       .operation-cell {
         padding: 4px;
@@ -140,6 +142,26 @@
         white-space: nowrap;
         word-break: break-word;
         text-align: left;
+        width: 100%;
+
+        .action-button {
+          display: inline-block;
+          height: 20px;
+          min-width: 40px;
+          border: 1px solid #ffffff;
+          color: var(--tsui-data-table-header-background, #0277BD);
+
+          &:hover {
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+          }
+
+          &:active {
+            color: var(--tsui-data-table-header-background, #0277BD);
+            position: relative;
+            top: 1px;
+          }
+        }
       }
 
       a {
@@ -147,23 +169,7 @@
         text-align: center;
       }
 
-      .action-button {
-        display: inline-block;
-        min-width: 50px;
-        border: 1px solid #ffffff;
-        color: var(--tsui-action-button-color, navy);
 
-        &:hover {
-          border: 1px solid #d9d9d9;
-          border-radius: 6px;
-        }
-
-        &:active {
-          color: var(--tsui-action-button-color, navy);
-          position: relative;
-          top: 1px;
-        }
-      }
 
       .action-popover {
         padding: 2px;
@@ -174,14 +180,14 @@
           padding: 2px 4px;
           display: block;
           text-align: left;
-          color: var(--tsui-action-button-color, navy);
+          color: var(--tsui-data-table-header-background, #0277BD);
 
           &:hover {
             background-color: var(--tsui-data-table-popover-action-hover-background, #ffffe0);
           }
 
           &:active {
-            color: var(--tsui-action-button-color, navy);
+            color: var(--tsui-data-table-header-background, #0277BD);
             background-color: #e1e1e1;
           }
 

@@ -38,7 +38,7 @@
         popover.doOpen();
     }
 </script>
-<div bind:this={cell} class="operation-cell" style="height: {rowHeight}px; padding 4px 0">
+<div bind:this={cell} class="operation-cell" style="height: {rowHeight}px">
     {#each buttons as action}
         <a class="action-button" style="line-height:{rowHeight-8}px" href="javascript:void(0)" on:click={(e)=>{action.callback(item)}}>{action.label}</a>
     {/each}
