@@ -49,7 +49,7 @@
             {#each popupList as action}
                 <div class="action-popover">
                     <a  style="line-height:{rowHeight-8}px" href="javascript:void(0)"
-                        on:click={(e)=>{action.callback(item); console.log(e.target.getBoundingClientRect())}}>
+                        on:click={(e)=>{action.callback(item); popover.close();}}>
                         {action.label}
                     </a>
                 </div>

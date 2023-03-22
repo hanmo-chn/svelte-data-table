@@ -8,6 +8,8 @@
   --tsui-data-table-data-line-color: #d9d9d9;
   --tsui-data-table-fixed-columns-background: #f0f0f0;
   --tsui-data-table-popover-action-hover-background: #ffffe0;
+  --tsui-data-table-active-row-background-color: #B3E5FC;
+  --tsui-data-table-hover-row-background-color: #E1F5FE;
 }
 
 /*设定表格的滚动条*/
@@ -197,6 +199,14 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
+
+        &:hover {
+          background-color: var(--tsui-data-table-hover-row-background-color, #E1F5FE);
+        }
+
+        &:active {
+          background-color: var(--tsui-data-table-active-row-background-color, #B3E5FC);
+        }
 
         .table-cell {
           border-right: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);

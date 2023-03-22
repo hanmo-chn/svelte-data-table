@@ -3,3 +3,4 @@
 /node_modules/
 /package/
 /src/lib/tsui-data-table.css
+/package-lock.json

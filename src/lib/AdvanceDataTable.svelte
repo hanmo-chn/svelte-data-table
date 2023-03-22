@@ -128,7 +128,7 @@
 <div bind:this={tabElement} class="tsui-adv-table-panel {className}" {id} style="{style}; {grid$style}">
     {@html tableStyles}
     <div class="table-header indicator-col" style="line-height: {headerHeight}px">
-        <span>序号</span>
+        <span></span>
     </div>
     <div class="table-header data-cols" style="line-height: {headerHeight}px">
         <TableHeader {scrollLeft} {table} columns={tabCols} {sortedColumn} on:sort={sortData}/>
@@ -141,12 +141,12 @@
     {#if sortedList && sortedList.length > 0}
         <div class="table-content-panel indicator-col" transition:fade>
             <IndicatorRows list={sortedList} canSelect={options.multipleSelection == true} {rowHeight} {scrollTop}
-                           hasHorizontalScroll={tableWidth > viewWidth}/>
+                           bind:selectedRows hasHorizontalScroll={tableWidth > viewWidth}/>
         </div>
         <div bind:this={viewDataTable} transition:fade class="table-content-panel data-cols" bind:clientWidth={viewWidth}
               on:scroll={handleDataTableScroll} style="{hasOperation ? '' : 'overflow-y: auto'}">
-            <DataContentPanel bind:this={contentPanel} bind:selectedRows columns={tabCols} {table} {tableWidth}
-                              list={sortedList} {rowHeight} {scrollTop} scrollable={!hasOperation}/>
+            <DataContentPanel bind:this={contentPanel} columns={tabCols} {table} {tableWidth}
+                              list={sortedList} {rowHeight} {scrollTop} scrollable={!hasOperation} on:rowDblClick/>
         </div>
         {#if hasOperation}
             <div  transition:fade class="table-content-panel operation-col" on:scroll={handleOperationColScroll}>

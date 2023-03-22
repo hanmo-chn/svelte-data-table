@@ -1,6 +1,6 @@
 {
   "name": "@hanmotec/advance-datatable",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
@@ -14,7 +14,7 @@
     "publish": "cd ./package && npm publish --access public"
   },
   "devDependencies": {
-    "@hanmotec/tsui-common": "^0.1.0",
+    "@hanmotec/tsui-common": "^0.1.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@sveltejs/package": "next",

@@ -9,11 +9,10 @@
     export let scrollable: boolean = false;
     export let tableWidth: number = 0;
     export let columns: Array<TableColumn> = [];
-    export let selectedRows;
 
 </script>
 <div style="position: relative; top: {scrollable ? 0 : -scrollTop}px; width: {tableWidth}px">
     {#each list as item, rowIdx}
-        <DataRow {rowHeight} {columns} {item} {rowIdx} bind:selectedRows/>
+        <DataRow {rowHeight} {columns} {item} {rowIdx} on:rowDblClick/>
     {/each}
 </div>
