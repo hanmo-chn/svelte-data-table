@@ -1,0 +1,276 @@
+:root {
+  --tsui-data-table-primary-color: #333;
+  --tsui-data-table-primary-background-color: #ffffff;
+  --tsui-data-table-out-border: #333;
+  --tsui-data-table-header-background: #0277BD;
+  --tsui-data-table-header-color: #fff;
+  --tsui-data-table-header-line-color: #fff;
+  --tsui-data-table-data-line-color: #d9d9d9;
+  --tsui-data-table-fixed-columns-background: #f0f0f0;
+  --tsui-data-table-popover-action-hover-background: #ffffe0;
+}
+
+/*设定表格的滚动条*/
+.tsui-adv-table-panel {
+
+  ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+    background: #f7f7f7;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--tsui-data-table-fixed-columns-background);
+    -webkit-border-radius: 1ex;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000;
+  }
+
+  /*定义整个表格的panel*/
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px auto 180px;
+  grid-template-rows: 60px auto;
+  grid-gap: 0;
+  border: var(--tsui-data-table-out-border, #333333) 1px solid;
+  box-sizing: border-box;
+  user-select: none;
+  background-color: var(--tsui-data-table-primary-background-color);
+  overflow: hidden;
+
+
+
+  .table-header {
+    overflow: hidden;
+    font-weight: 600;
+    background-color: var(--tsui-data-table-header-background, #0277BD);
+    color: var(--tsui-data-table-header-color, #ffffff);
+    text-align: center;
+
+    &.indicator-col {
+      border-right: 1px solid var(--tsui-data-table-header-color, #ffffff);
+    }
+
+    &.operation-col {
+      border-left: 1px solid var(--tsui-data-table-header-color, #ffffff);
+    }
+
+    .table-cell {
+      text-align: center!important;
+      border-right: 1px solid var(--tsui-data-table-header-color, #ffffff);
+
+      &.sorted {
+        &>span {
+          cursor: pointer;
+        }
+      }
+
+
+      .resizer {
+        position: absolute;
+        top: 0;
+        right: 1px;
+        cursor: ew-resize;
+        width: 16px;
+        height: 100%;
+        display: none;
+        stroke: #ffffff;
+
+        &:active {
+          display: block;
+        }
+      }
+
+      &:hover {
+        .resizer {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .empty-indicator {
+    width: 100%;
+    padding-top: 10px;
+    font-size: 1.5em;
+    text-align: center;
+    grid-column: 1 / span 3;
+    font-style: italic;
+    color: #7f7f7f;
+  }
+
+
+  .table-content-panel {
+
+    height: 100%;
+
+    &.indicator-col {
+      border-right: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+      overflow: hidden;
+
+      .indicator-cell {
+        border-bottom: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+        box-sizing: border-box;
+        background-color: var(--tsui-data-table-fixed-columns-background, #e1e1e1);
+
+        &:last-child {
+          border-bottom: unset;
+        }
+      }
+    }
+
+    &.operation-col {
+      border-left: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+      box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+      text-align: center;
+      overflow-y: auto;
+
+      .operation-cell {
+        padding: 4px 0;
+        position: relative;
+        box-sizing: border-box;
+        border-bottom: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+        white-space: nowrap;
+        word-break: break-word;
+        text-align: left;
+      }
+
+      a {
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .action-button {
+        display: inline-block;
+        min-width: 50px;
+        border: 1px solid #ffffff;
+        color: var(--tsui-action-button-color, navy);
+
+        &:hover {
+          border: 1px solid #d9d9d9;
+          border-radius: 6px;
+        }
+
+        &:active {
+          color: var(--tsui-action-button-color, navy);
+          position: relative;
+          top: 1px;
+        }
+      }
+
+      .action-popover {
+        padding: 2px;
+        box-sizing: border-box;
+        a {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 2px 4px;
+          display: block;
+          text-align: left;
+          color: var(--tsui-action-button-color, navy);
+
+          &:hover {
+            background-color: var(--tsui-data-table-popover-action-hover-background, #ffffe0);
+          }
+
+          &:active {
+            color: var(--tsui-action-button-color, navy);
+            background-color: #e1e1e1;
+          }
+
+        }
+
+      }
+    }
+
+    &.data-cols {
+      overflow-y: hidden;
+      overflow-x: auto;
+
+      .data-row {
+        border-bottom: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+
+        .table-cell {
+          border-right: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: relative;
+
+          &:last-child {
+            border-right: unset;
+          }
+
+          .cell-content {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .cell-hint {
+            display: none;
+            position: absolute;
+            width: 100%;
+            background-color: #FFFFE1;
+            padding: 4px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            top: 50%;
+            left: 20%;
+            border: 1px solid var(--tsui-data-table-out-border, #333);
+            z-index: 10;
+          }
+
+          &:hover {
+            .cell-hint {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .virtual-horizontal-bar {
+      height: 10px;
+      width: 100%;
+    }
+  }
+
+  .data-list {
+    &.indicator-cell {
+      &>div {
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        label {
+          display: inline-block;
+        }
+      }
+
+    }
+  }
+
+  .table-cell {
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 0 4px;
+
+    &:last-child {
+      border-right: unset;
+    }
+  }
+}
