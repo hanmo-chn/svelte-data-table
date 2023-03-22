@@ -26,5 +26,8 @@
     "tslib": "^2.3.1",
     "typescript": "^4.7.4",
     "vite": "4.0.4"
+  },
+  "dependencies": {
+    "@ticatec/enhanced-utils": "^0.9.0"
   }
 }

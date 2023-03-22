@@ -2,7 +2,7 @@ import type DataColumn from "./DataColumn";
 import type CompositeColumn from "./CompositeColumn";
 import type TableColumn from "./TableColumn";
 import {compareObject} from "./CompareFunction";
-import {tableWidth} from "./TableWidth";
+import '@ticatec/enhanced-utils'
 
 
 const toTableColumn = (column: DataColumn): TableColumn => {
@@ -11,15 +11,16 @@ const toTableColumn = (column: DataColumn): TableColumn => {
         align: column.align || 'left',
         width: column.width,
         actualWidth: column.width,
+        fitWidth: column.width,
         field: column.field,
+        visible: true,
+        resizable: column.resizable == true,
         compareFunction: column.sortable ? (column.compareFunction || compareObject) : null,
         href: column.href == null ? null :  column.href,
         orderDirection: null,
         formatter: column.formatter ?? ((value) => value || ''),
         escapeHTML: column.escapeHTML == true,
-        resizable: column.resizable == true,
         weight: column.weight || 0,
-        manuallyResized: false,
         hint: column.hint
     }
 }
@@ -27,64 +28,101 @@ const toTableColumn = (column: DataColumn): TableColumn => {
 export default class DataTable {
 
     #columns: Array<TableColumn>;
-    #rows: number;
+    #headerRowsCount: number;
     #width: number = 0;
-    #actualWidth: number = 0;
+    readonly #id: string;
+    #viewWidth: number;
+    #onChange: any;
 
-    constructor(columns: Array<DataColumn | CompositeColumn>) {
+    constructor(id: string, columns: Array<DataColumn | CompositeColumn>, viewWidth: number, onChange: any) {
+        this.#id = id;
         this.#columns = [];
-        this.#rows = 1;
+        this.#headerRowsCount = 1;
         this.#width = 0;
+        this.#viewWidth = viewWidth;
         columns.forEach(column => {
             if ("columns" in column) { //这是一个复合列
-                this.#rows  = 2;
+                this.#headerRowsCount  = 2;
             } else {
-                this.#columns.push(toTableColumn(column));
-                this.#width += column.width;
+                let tabCol = toTableColumn(column);
+                this.#columns.push(tabCol);
             }
         });
-        console.log(this.#columns);
-        this.#actualWidth = this.#width;
-        tableWidth.set(this.#actualWidth);
+        console.log('初始化的字段', this.#columns)
+        this.adjustColumnsWidth();
+        this.#onChange = onChange;
     }
 
     setViewWidth(viewWidth: number): void {
-        let shortage: number = this.#width < viewWidth ? this.#width - viewWidth : 0;
-        if (shortage > 0) {
-            this.recalculateActualTableWidth();
-            let totalWeight = 0;
-            this.#columns.forEach(col => {
-                if (col.weight && col.weight > 0) {
-                    totalWeight += col.weight;
-                }
-            });
-            this.#columns.forEach(col => {
-                if (col.weight && col.weight > 0) {
-
-                }
-            });
+        console.log("表格宽度和视窗宽度", this.#width, this.#viewWidth);
+        this.#viewWidth = viewWidth;
+        if (this.#viewWidth > this.#width) {
+            console.log("调整表格宽度适应视窗");
+            this.adjustColumnsWidth();
         }
     }
 
-    toColStyles = (id:string): string => {
+    buildCssStyles = (): string => {
         let styles = '';
         this.#columns.forEach((col, idx) => {
-            styles += `#${id} .col-${idx} { width: ${col.actualWidth}px; text-align: ${col.align} }\n`
+            styles += `#${this.#id} .col-${idx} { width: ${col.actualWidth}px; text-align: ${col.align} }\n`
         })
         return `<style>\n ${styles} \n</style>`;
     }
 
     get columns():Array<TableColumn> {
-        return this.#columns;
+        return [...this.#columns];
     }
 
-    private recalculateActualTableWidth(): void {
-        this.#actualWidth = 0;
-        this.#columns.forEach(column => {
-            this.#actualWidth += column.actualWidth;
-        });
+    get width(): number {
+        return this.#width;
+    }
+
+    adjustTableWidth():void {
+        this.#width = this.recalculateActualTableWidth();
+    }
+
+    adjustColumnWidth(column: TableColumn, offsetWidth: number):void {
+        if (this.#width + offsetWidth > this.#viewWidth) {
+            this.#width += offsetWidth;
+            column.actualWidth += offsetWidth;
+            this.#onChange(offsetWidth > 0);
+        }
+    }
+
+    /**
+     * 重新计算表格实际的宽度
+     * @private
+     */
+    private recalculateActualTableWidth(): number {
+        let width:number = 0;
+        this.#columns.forEach(col => {
+            width += col.visible ? col.actualWidth : 0;
+        })
+        return width;
     }
 
 
-
+    private adjustColumnsWidth() {
+        this.#width = this.recalculateActualTableWidth();
+        if (this.#width < this.#viewWidth) {
+            let shortage: number = this.#viewWidth - this.#width;
+            if (shortage > 0) {
+                let totalWeight = 0;
+                this.#columns.forEach(col => {
+                    if (col.weight > 0 && col.visible) {
+                        totalWeight += col.weight;
+                    }
+                });
+                this.#width = this.#viewWidth;
+                if (totalWeight > 0) {
+                    let pws: number = shortage / totalWeight;
+                    this.#columns.forEach(col => {
+                        col.actualWidth += pws * col.weight;
+                    })
+                }
+            }
+            this.#onChange();
+        }
+    }
 }

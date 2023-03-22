@@ -4,13 +4,13 @@
     export let actionBuilder: any;
     export let rowHeight: number;
     export let hasHorizontalScroll: boolean;
-
-    let offsetHeight;
+    export let vacancy: number;
+    export let tableRect: any;
 
 </script>
 <div style="position: relative;">
     {#each list as item, idx}
-        <OperationCell {rowHeight} actions={actionBuilder(item)} {item}/>
+        <OperationCell {vacancy} {tableRect} {rowHeight} actions={actionBuilder(item)} {item}/>
     {/each}
     {#if hasHorizontalScroll}
         <div class="virtual-horizontal-bar"></div>

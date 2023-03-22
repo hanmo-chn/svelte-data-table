@@ -6,6 +6,7 @@
     export let rowHeight: number = 0;
     export let item;
     export let columns:Array<TableColumn>;
+    export let rowIdx: number;
 
     const getReferenceValue = (column: TableColumn, data: any) => {
         return column.field==null ? data : data[column.field]
@@ -24,9 +25,9 @@
     {#each columns as column, idx}
         <div class="table-cell col-{idx}">
             {#if column.href != null}
-                <HrefCell hrefLinks={column.href(item)} value={getReferenceValue(column, item)}/>
+                <HrefCell hrefLinks={column.href(item)}/>
             {:else}
-                <DataCell escapeHTML={column.escapeHTML} content={generateCellContent(column, item)} hint={generateHint(column, item)}/>
+                <DataCell {column} escapeHTML={column.escapeHTML} content={generateCellContent(column, item)} hint={generateHint(column, item)}/>
             {/if}
         </div>
     {/each}

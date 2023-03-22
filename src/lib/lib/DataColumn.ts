@@ -57,4 +57,6 @@ export default interface DataColumn extends BaseColumn {
      */
     hint?: CellHint;
 
+    visible?: boolean;
+
 }

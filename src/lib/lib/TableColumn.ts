@@ -17,9 +17,21 @@ export default interface TableColumn {
      */
     width: number;
     /**
-     * 当前实际的宽度
+     * 实际的宽度
      */
     actualWidth: number;
+    /**
+     * 合适的宽度
+     */
+    fitWidth: number;
+    /**
+     * 是否显示
+     */
+    visible: boolean;
+    /**
+     * 是否可以更改大小
+     */
+    resizable: boolean;
     /**
      * 对应的字段/属性名
      */
@@ -45,17 +57,9 @@ export default interface TableColumn {
      */
     escapeHTML: boolean;
     /**
-     * 是否可以更改宽度
-     */
-    resizable:boolean;
-    /**
      * 自动调节占重
      */
     weight: number;
-    /**
-     * 手工resize过
-     */
-    manuallyResized: boolean;
     /**
      *
      */

@@ -2,28 +2,19 @@
 
     import type DataTable from "../lib/DataTable";
     import type TableColumn from "../lib/TableColumn";
-    import {tableWidth} from "$lib/lib/TableWidth.js";
-    import {createEventDispatcher} from "svelte";
-    import {OrderDirection} from "$lib/lib/OrderDirection.js";
-    import HeaderCell from "$lib/component/HeaderCell.svelte";
+    import HeaderCell from "./HeaderCell.svelte";
 
     export let table:DataTable;
+    export let columns: Array<TableColumn>;
     export let scrollLeft:number = 0;
     export let sortedColumn: TableColumn;
-
-    const dispatch = createEventDispatcher();
-
-    let columns:Array<TableColumn>;
-
-    $: if (table) {
-        columns = table.columns;
-    }
+    export let width: number;
 
 </script>
-<div style="display: flex; flex-direction: row; position: relative; left: {-scrollLeft}px; width: {$tableWidth}px">
+<div style="display: flex; flex-direction: row; position: relative; left: {-scrollLeft}px; width: {width}px">
 {#if table}
     {#each columns as column, idx}
-        <HeaderCell {column} {idx} sorting={column == sortedColumn} on:sort/>
+        <HeaderCell {table} {column} {idx} sorting={column == sortedColumn} on:sort/>
     {/each}
 {/if}
 </div>
