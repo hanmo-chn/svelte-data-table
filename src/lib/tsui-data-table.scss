@@ -135,7 +135,7 @@
       user-select: none;
 
       .operation-cell {
-        padding: 4px;
+        padding: 2px 4px;
         position: relative;
         box-sizing: border-box;
         border-bottom: 1px solid var(--tsui-data-table-data-line-color, #d9d9d9);
@@ -146,7 +146,7 @@
 
         .action-button {
           display: inline-block;
-          height: 20px;
+          padding: 0 6px;
           min-width: 40px;
           border: 1px solid #ffffff;
           color: var(--tsui-data-table-header-background, #0277BD);

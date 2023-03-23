@@ -1,6 +1,6 @@
 {
   "name": "@hanmotec/advance-datatable",
-  "version": "0.1.8",
+  "version": "0.2.1",
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
