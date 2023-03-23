@@ -53,8 +53,8 @@ export default class DataTable {
     }
 
     setViewWidth(viewWidth: number): void {
-        console.log("表格宽度和视窗宽度", this.#width, this.#viewWidth);
         this.#viewWidth = viewWidth;
+        console.log("表格宽度和视窗宽度", this.#width, this.#viewWidth);
         if (this.#viewWidth > this.#width) {
             console.log("调整表格宽度适应视窗");
             this.adjustColumnsWidth();
@@ -79,6 +79,7 @@ export default class DataTable {
 
     adjustTableWidth():void {
         this.#width = this.recalculateActualTableWidth();
+        console.log("调整宽度", this.#width)
     }
 
     adjustColumnWidth(column: TableColumn, offsetWidth: number):void {
@@ -106,6 +107,7 @@ export default class DataTable {
         this.#width = this.recalculateActualTableWidth();
         if (this.#width < this.#viewWidth) {
             let shortage: number = this.#viewWidth - this.#width;
+            this.#width = this.#viewWidth;
             if (shortage > 0) {
                 let totalWeight = 0;
                 this.#columns.forEach(col => {
@@ -113,7 +115,6 @@ export default class DataTable {
                         totalWeight += col.weight;
                     }
                 });
-                this.#width = this.#viewWidth;
                 if (totalWeight > 0) {
                     let pws: number = shortage / totalWeight;
                     this.#columns.forEach(col => {
@@ -121,6 +122,7 @@ export default class DataTable {
                     })
                 }
             }
+            console.debug('调整后的宽度：', this.#width, this.#viewWidth)
             this.#onChange();
         }
     }

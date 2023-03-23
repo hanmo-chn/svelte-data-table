@@ -121,7 +121,9 @@
     }
 
     $: if (table && viewWidth) {
+        console.log('视窗宽度', viewWidth);
         table.setViewWidth(viewWidth);
+        tableWidth = table.width;
     }
 
 </script>
@@ -131,7 +133,7 @@
         <span></span>
     </div>
     <div class="table-header data-cols" style="line-height: {headerHeight}px">
-        <TableHeader {scrollLeft} {table} columns={tabCols} {sortedColumn} on:sort={sortData}/>
+        <TableHeader width={tableWidth} {scrollLeft} {table} columns={tabCols} {sortedColumn} on:sort={sortData}/>
     </div>
     {#if hasOperation}
         <div class="table-header operation-col"  style="line-height: {headerHeight}px">
