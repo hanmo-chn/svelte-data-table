@@ -87,14 +87,10 @@
         scrollLeft = e.target.scrollLeft;
     }
 
-    const generateColumnsStyle = (colsWidth) => {
-        if (table && colsWidth) {
-            //table.buildCssStyles(colsWidth);
-        }
-    }
 
     let sortedColumn:TableColumn;
     let viewDataTable: any;
+    let operationColumn;
 
     const sortList = () => {
         sortedList = sortedColumn == null ? [...list] : list.sort((o1, o2) => {
@@ -112,8 +108,14 @@
         sortList();
     }
 
-    $: if (columns) {
-        generateColumnsStyle([]);
+    const handleWheelOnDataTable = (e) => {
+        console.log(e);
+        if (e.deltaY != 0 && operationColumn) {
+            operationColumn.scrollTop += e.deltaY;
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+        }
     }
 
     $: if (list) {
@@ -121,7 +123,6 @@
     }
 
     $: if (table && viewWidth) {
-        console.log('视窗宽度', viewWidth);
         table.setViewWidth(viewWidth);
         tableWidth = table.width;
     }
@@ -129,7 +130,7 @@
 </script>
 <div bind:this={tabElement} class="tsui-adv-table-panel {className}" {id} style="{style}; {grid$style}">
     {@html tableStyles}
-    <div class="table-header indicator-col" style="line-height: {headerHeight}px">
+    <div class="table-header indicator-col" style="line-height: {headerHeight}px" on:wheel={(e)=>{e.stopPropagation();e.preventDefault();return false}}>
         <span></span>
     </div>
     <div class="table-header data-cols" style="line-height: {headerHeight}px">
@@ -147,11 +148,11 @@
         </div>
         <div bind:this={viewDataTable} transition:fade class="table-content-panel data-cols" bind:clientWidth={viewWidth}
               on:scroll={handleDataTableScroll} style="{hasOperation ? '' : 'overflow-y: auto'}">
-            <DataContentPanel bind:this={contentPanel} columns={tabCols} {table} {tableWidth}
+            <DataContentPanel bind:this={contentPanel} columns={tabCols} {table} {tableWidth} on:wheel={handleWheelOnDataTable}
                               list={sortedList} {rowHeight} {scrollTop} scrollable={!hasOperation} on:rowDblClick/>
         </div>
         {#if hasOperation}
-            <div  transition:fade class="table-content-panel operation-col" on:scroll={handleOperationColScroll}>
+            <div bind:this={operationColumn}  transition:fade class="table-content-panel operation-col" on:scroll={handleOperationColScroll}>
                 <OperationRows list={sortedList} {tableRect} vacancy={actionColumn.numOfVacancy || 2}
                                actionBuilder={actionColumn.actionBuilder} {rowHeight}
                                hasHorizontalScroll={tableWidth > viewWidth}/>

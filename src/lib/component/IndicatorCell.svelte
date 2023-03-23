@@ -11,7 +11,6 @@
         return false;
     }
 
-    $: console.log('选中情况', checked);
 </script>
 <label class="checkbox-label">
     <input style="vertical-align: middle" type="checkbox" checked={checked} on:click={handleCheckBoxClick}/>

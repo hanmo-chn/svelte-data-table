@@ -11,7 +11,7 @@
     export let columns: Array<TableColumn> = [];
 
 </script>
-<div style="position: relative; top: {scrollable ? 0 : -scrollTop}px; width: {tableWidth}px">
+<div style="position: relative; top: {scrollable ? 0 : -scrollTop}px; width: {tableWidth}px" on:wheel>
     {#each list as item, rowIdx}
         <DataRow {rowHeight} {columns} {item} {rowIdx} on:rowDblClick/>
     {/each}

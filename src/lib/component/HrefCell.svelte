@@ -24,9 +24,13 @@
 <div class="cell-content">
     {#if Array.isArray(hrefLinks)}
         {#each hrefLinks as link}
-            <a href="javascript:void(0)" on:click={(e)=>{handleLinkClick(link)}}>
-                <span>{link.text}</span>
-            </a>
+            {#if typeof link == 'string'}
+                <span>{link}</span>
+            {:else}
+                <a href="javascript:void(0)" on:click={(e)=>{handleLinkClick(link)}}>
+                    <span>{link.text}</span>
+                </a>
+            {/if}
         {/each}
     {/if}
 </div>
