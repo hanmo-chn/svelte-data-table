@@ -7,6 +7,7 @@
     export let rowHeight: number;
     export let vacancy: number;
     export let tableRect: any;
+    export let align: string = 'center';
 
     let popupList:Array<any> = [];
     let buttons:Array<any> = [];
@@ -38,12 +39,12 @@
         popover.doOpen();
     }
 </script>
-<div bind:this={cell} class="operation-cell" style="height: {rowHeight}px">
+<div bind:this={cell} class="operation-cell" style="text-align: {align}; height: {rowHeight}px;">
     {#each buttons as action}
         <a class="action-button" href="javascript:void(0)" on:click={(e)=>{action.callback(item)}}>{action.label}</a>
     {/each}
     {#if popupList.length > 0}
-        <a class="action-button" style="line-height:{rowHeight-8}px; min-width: 20px" href="javascript:void(0)" on:click={showPopupActions}>...</a>
+        <a class="action-button" style="width: 22px; min-width: unset" href="javascript:void(0)" on:click={showPopupActions}>...</a>
         <Popover bind:this={popover} {posY} posX="right" height="120" width="90">
             <div style="width: 100%; height: 100%; background-color: #ffffff">
             {#each popupList as action}

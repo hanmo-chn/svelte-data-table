@@ -42,6 +42,7 @@
     let tabElement;
     let actionColumn: any;
     let tableRect: any;
+    let actionAlign:string;
 
     const generateGridStyle = () => {
         let indicatorWidth = options.indicatorWidth || 60;
@@ -57,6 +58,7 @@
     onMount(()=>{
         id = `tab-${(new Date()).getTime().toString(36)}`;
         actionColumn = options.actionColumn || {};
+        actionAlign = actionColumn.align || 'center';
         hasOperation = actionColumn.actionBuilder != null;
         headerHeight = (options.headerHeight || 32) * 1;
         table = new DataTable(id, columns, viewWidth, (resetTableWidth)=>{
@@ -109,7 +111,6 @@
     }
 
     const handleWheelOnDataTable = (e) => {
-        console.log(e);
         if (e.deltaY != 0 && operationColumn) {
             operationColumn.scrollTop += e.deltaY;
             e.stopPropagation();
@@ -154,7 +155,7 @@
         {#if hasOperation}
             <div bind:this={operationColumn}  transition:fade class="table-content-panel operation-col" on:scroll={handleOperationColScroll}>
                 <OperationRows list={sortedList} {tableRect} vacancy={actionColumn.numOfVacancy || 2}
-                               actionBuilder={actionColumn.actionBuilder} {rowHeight}
+                               actionBuilder={actionColumn.actionBuilder} {rowHeight} align={actionAlign}
                                hasHorizontalScroll={tableWidth > viewWidth}/>
             </div>
         {/if}
