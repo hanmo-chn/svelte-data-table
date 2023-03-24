@@ -139,32 +139,26 @@
             text: '操作',
             vacancy: 2,
             width: 180,
-            actionBuilder: item => [
-                {
-                    label: '编辑',
-                    callback: item => console.log(item)
-                },
-                {
-                    label: '删除',
-                    callback: item => console.log(item)
-                },
-                {
-                    label: '编辑',
-                    callback: item => console.log(item)
-                },
-                {
-                    label: '删除',
-                    callback: item => console.log(item)
-                },
-                {
-                    label: '编辑',
-                    callback: item => console.log(item)
-                },
-                {
-                    label: '删除',
-                    callback: item => console.log(item)
+            align: 'left',
+            actionBuilder: item => {
+                let actions = [
+                    {
+                        label: '编辑',
+                        callback: item => console.log(item)
+                    }];
+                if (item.cars > 1) {
+                    actions.push(
+                    {
+                        label: '删除',
+                            callback: item => {
+                                let idx = list.indexOf(item);
+                                list.splice(idx, 1);
+                                list = [...list];
+                            }
+                    })
                 }
-            ],
+                return actions;
+            }
         },
         multipleSelection: true
     }

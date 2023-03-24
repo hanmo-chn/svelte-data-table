@@ -3,19 +3,26 @@
     import Popover from  '@hanmotec/tsui-common/popover'
 
     export let item: any;
-    export let actions: Array<any> = [];
     export let rowHeight: number;
     export let vacancy: number;
     export let tableRect: any;
     export let align: string = 'center';
+    export let actionBuilder: any;
 
     let popupList:Array<any> = [];
     let buttons:Array<any> = [];
     let popover;
     let posY: string = "top";
     let cell: any;
+    let actions = [];
 
-    onMount(()=>{
+    $: buildActions(item);
+
+
+    const buildActions = (data) => {
+        buttons = [];
+        popupList = [];
+        actions = actionBuilder(data);
         actions.forEach((action, idx) => {
             if (idx < vacancy) {
                 buttons.push(action);
@@ -25,8 +32,7 @@
         });
         buttons = [...buttons];
         popupList = [...popupList];
-
-    });
+    }
 
     const showPopupActions = () => {
         let rect = cell.getBoundingClientRect();

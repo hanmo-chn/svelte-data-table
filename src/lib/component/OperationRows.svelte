@@ -8,10 +8,12 @@
     export let tableRect: any;
     export let align: string = 'center';
 
+
+
 </script>
 <div style="position: relative; width: 100%; box-sizing: border-box;">
     {#each list as item, idx}
-        <OperationCell {vacancy} {tableRect} {rowHeight} {align} actions={actionBuilder(item)} {item}/>
+        <OperationCell {vacancy} {tableRect} {rowHeight} {align} {actionBuilder} {item}/>
     {/each}
     {#if hasHorizontalScroll}
         <div class="virtual-horizontal-bar"></div>
